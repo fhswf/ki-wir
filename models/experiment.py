@@ -63,33 +63,17 @@ class VAEXperiment(pl.LightningModule):
         return {'val_loss': avg_loss, 'log': tensorboard_logs}
 
     def sample_images(self):
-        # Get sample reconstruction image
-        test_input, test_label = next(iter(self.sample_dataloader))
-        test_input = test_input.to(self.curr_device)
-        test_label = test_label.to(self.curr_device)
-        recons = self.model.generate(test_input, labels = test_label)
-        vutils.save_image(recons.data,
-                          f"{self.logger.save_dir}{self.logger.name}/version_{self.logger.version}/"
-                          f"recons_{self.logger.name}_{self.current_epoch}.png",
-                          normalize=True,
-                          nrow=12)
-
-        # vutils.save_image(test_input.data,
-        #                   f"{self.logger.save_dir}{self.logger.name}/version_{self.logger.version}/"
-        #                   f"real_img_{self.logger.name}_{self.current_epoch}.png",
-        #                   normalize=True,
-        #                   nrow=12)
-
         try:
             samples = self.model.sample(144,
                                         self.curr_device,
                                         labels = test_label)
             vutils.save_image(samples.cpu().data,
-                              f"{self.logger.save_dir}{self.logger.name}/version_{self.logger.version}/"
-                              f"{self.logger.name}_{self.current_epoch}.png",
+                              f".",
+                              f"sample.png",
                               normalize=True,
                               nrow=12)
         except:
+            print("Could not save sample images")
             pass
 
 
