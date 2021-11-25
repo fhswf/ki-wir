@@ -3,7 +3,7 @@ import torch
 from torch import optim
 from .base import BaseVAE
 from .types_ import *
-from utils import data_loader
+from .utils import data_loader
 import pytorch_lightning as pl
 from torchvision import transforms
 import torchvision.utils as vutils
